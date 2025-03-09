@@ -4,6 +4,7 @@ import com.boostphysio.model.Appointment;
 import com.boostphysio.model.Patient;
 import com.boostphysio.model.Physiotherapist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClinicManager {
@@ -12,4 +13,12 @@ public class ClinicManager {
     private  List<Appointment> appointments;
     private int bookingIdCounter;
 
-}
+
+    public  ClinicManager (){
+        this.physiotherapists = new ArrayList<>();
+        this.patients = new ArrayList<>();
+         this.appointments = new ArrayList<>();
+    }
+
+
+    }
