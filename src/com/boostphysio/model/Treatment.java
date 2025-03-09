@@ -12,4 +12,20 @@ public class Treatment {
         this.time = time;
         this.physiotherapist = physiotherapist;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Physiotherapist getPhysiotherapist() {
+        return physiotherapist;
+    }
 }
