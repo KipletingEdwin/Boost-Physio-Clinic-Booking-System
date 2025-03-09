@@ -41,8 +41,19 @@ public class ClinicManager {
         }
         Appointment newAppointment = new Appointment(bookingIdCounter++,patient,treatment,physiotherapist);
         appointments.add(newAppointment);
-        System.out.println("Appointment booked: " + treatment.getName() + " with " + physiotherapist);
+        System.out.println("Appointment booked: " + treatment.getName() + " with " + physiotherapist.getName());
+        return  true;
+    }
 
+    public  void  cancelAppointment(int bookingId){
+        for (Appointment appointment : appointments){
+            if(appointment.getBookingId() == bookingId){
+                appointment.cancel();
+                System.out.println("Appointment cancelled: ID " + bookingId);
+                return;
+            }
+        }
+        System.out.println("Appointment not found: ID " + bookingId);
     }
 
 
