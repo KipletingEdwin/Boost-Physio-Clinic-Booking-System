@@ -23,6 +23,11 @@ public class ClinicManager {
     public  void  addPatient(Patient patient){
         patients.add(patient);
         System.out.println("Patient added: " + patient.getName());
+    }
+
+    public  void  removePatient(int patientId){
+        patients.removeIf(patient -> patient.getId() == patientId);
+        System.out.println("Patient removed: ID " + patientId);
 
     }
 
