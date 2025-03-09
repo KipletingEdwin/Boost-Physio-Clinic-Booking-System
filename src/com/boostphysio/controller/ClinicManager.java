@@ -17,7 +17,13 @@ public class ClinicManager {
     public  ClinicManager (){
         this.physiotherapists = new ArrayList<>();
         this.patients = new ArrayList<>();
-         this.appointments = new ArrayList<>();
+        this.appointments = new ArrayList<>();
+    }
+
+    public  void  addPatient(Patient patient){
+        patients.add(patient);
+        System.out.println("Patient added: " + patient.getName());
+
     }
 
 
