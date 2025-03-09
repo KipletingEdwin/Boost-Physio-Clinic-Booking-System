@@ -19,6 +19,26 @@ public class Physiotherapist {
         this.treatments = new ArrayList<>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public List<Treatment> getTreatments() {
+        return treatments;
+    }
+
+    public List<String> getExpertise() {
+        return expertise;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public  void  addTreatment(Treatment treatment){
         treatments.add(treatment);
     }

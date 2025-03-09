@@ -3,6 +3,7 @@ package com.boostphysio.controller;
 import com.boostphysio.model.Appointment;
 import com.boostphysio.model.Patient;
 import com.boostphysio.model.Physiotherapist;
+import com.boostphysio.model.Treatment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,19 @@ public class ClinicManager {
     public  void  removePatient(int patientId){
         patients.removeIf(patient -> patient.getId() == patientId);
         System.out.println("Patient removed: ID " + patientId);
+    }
+
+    public  boolean bookAppointment(Patient patient, Treatment treatment,Physiotherapist physiotherapist){
+        for (Appointment existing : appointments){
+            if(existing.getPatient().getId() == patient.getId() && existing.getTreatment().getDate().equals(treatment.getDate()) &&
+            existing.getTreatment().getTime().equals(treatment.getTime())){
+                System.out.println("Booking failed! Patient already has an appointment at this time");
+                return  false;
+            }
+        }
+        Appointment newAppointment = new Appointment(bookingIdCounter++,patient,treatment,physiotherapist);
+        appointments.add(newAppointment);
+        System.out.println("Appointment booked: " + treatment.getName() + " with " + physiotherapist);
 
     }
 
