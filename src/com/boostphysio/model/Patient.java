@@ -11,4 +11,16 @@ public class Patient {
         this.name = name;
         this.contact = contact;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContact() {
+        return contact;
+    }
 }
