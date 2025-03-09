@@ -34,4 +34,12 @@ public class Appointment {
     public String getStatus() {
         return status;
     }
+
+    public  void  cancel(){
+        status = "Cancelled";
+    }
+
+    public  void  attend(){
+        status = "Attended";
+    }
 }
