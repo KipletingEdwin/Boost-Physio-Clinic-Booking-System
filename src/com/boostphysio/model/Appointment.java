@@ -6,4 +6,12 @@ public class Appointment {
     private  Treatment treatment;
     private  Physiotherapist physiotherapist;
     private  String status;
+
+    public  Appointment(int bookingId, Patient patient,Treatment treatment, Physiotherapist physiotherapist){
+        this.bookingId = bookingId;
+        this.patient = patient;
+        this.treatment = treatment;
+        this.physiotherapist = physiotherapist;
+        this.status = "Booked";
+    }
 }
