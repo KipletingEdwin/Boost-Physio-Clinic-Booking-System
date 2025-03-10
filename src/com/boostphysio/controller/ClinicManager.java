@@ -56,5 +56,17 @@ public class ClinicManager {
         System.out.println("Appointment not found: ID " + bookingId);
     }
 
+    public  void  generateReport(){
+        System.out.println("\n Clinic Report: ");
+        for(Physiotherapist physio : physiotherapists){
+            System.out.println("Physiotherapist: " + physio.getName());
+            for (Appointment appointment: appointments){
+                if (appointment.getPhysiotherapist().getId() == physio.getId()){
+                    System.out.println( appointment.getTreatment().getName()+ "| Patient: " + appointment.getPatient().getName() + "| Status: " + appointment.getStatus());
+                }
+            }
+        }
+    }
+
 
     }
