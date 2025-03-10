@@ -22,5 +22,10 @@ public class BookingPanel extends JPanel {
         topPanel.add(searchField);
 
         //List of Available Appointments
+        DefaultListModel<String> appointmentsListModel = new DefaultListModel<String>();
+        JList<String> appointmentList = new JList<>(appointmentsListModel);
+        JScrollPane scrollPane = new JScrollPane(appointmentList);
+
+        //Buttons for Booking,Canceling, and Attending Appointments
     }
 }
