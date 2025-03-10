@@ -41,6 +41,8 @@ public class BookingPanel extends JPanel {
         bottomPanel.add(cancelButton);
         bottomPanel.add(attendButton);
 
+        //Add Components to the Panel
+
         add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
