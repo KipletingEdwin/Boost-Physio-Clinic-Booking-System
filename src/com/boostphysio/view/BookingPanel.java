@@ -1,12 +1,23 @@
 package com.boostphysio.view;
 
+import com.boostphysio.controller.ClinicManager;
+import com.boostphysio.model.Appointment;
+import com.boostphysio.model.Patient;
+import com.boostphysio.model.Physiotherapist;
+import com.boostphysio.model.Treatment;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class BookingPanel extends JPanel {
-    public BookingPanel() {
-        //Add booking panel components here
 
+    private ClinicManager clinicManager;
+    private DefaultListModel<String> appointmentListModel;
+    private  JList<String> appointmentList;
+
+
+    public BookingPanel(ClinicManager clinicManager) {
+        this.clinicManager = clinicManager;
         setLayout(new BorderLayout());
 
         //Dropdown for selecting expertise
@@ -46,5 +57,70 @@ public class BookingPanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
+
+        //Load Appointments into List
+
+        loadAppointments();
+
+        //Book appointment event
+
+        bookButton.addActionListener(e->{
+            //Code to book appointment
+            String selectedExpertise = (String) expertiseDropdown.getSelectedItem();
+            String physioName = searchField.getText();
+
+            //Find a matching physiotherapist
+
+            for(Physiotherapist physio : clinicManager.getPhysiotherapists()){
+                if(physio.getName().equalsIgnoreCase(physioName) || physio.getExpertise().contains(selectedExpertise)){
+                    //Get First available treatment
+                    if(!physio.getTreatments().isEmpty()){
+                        Treatment treatment = physio.getTreatments().get(0);
+                        Patient patient = clinicManager.getPatients().get(0);  //Select first patient for now
+                        clinicManager.bookAppointment(patient, treatment,physio);
+                        loadAppointments();
+                        return;
+                    }
+                }
+
+            }
+            JOptionPane.showMessageDialog(this, "No matching physiotherapist found","Error", JOptionPane.ERROR_MESSAGE);
+        });
+
+        //Cancel appointment event
+        cancelButton.addActionListener(e->{
+            inr index = appointmentList.getSelectedIndex();
+            if(index>=0){
+                int bookingId = index + 1;
+                clinicManager.cancelAppointment(bookingId);
+                loadAppointments();
+            } else {
+                JOptionPane.showMessageDialog(this, "Select an appointment to cancel", "Warning",JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        //Attend appointment event
+        attendButton.addActionListener(e-> {
+            int index = appointmentList.getSelectedIndex();
+            if(index>=0){
+                int bookingId = index + 1;
+                clinicManager.attendAppointment(bookingId);
+                loadAppointments();
+            } else {
+                JOptionPane.showMessageDialog(this, "Select an appointment to attend", "Warning", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    public  void  loadAppointments(){
+        appointmentListModel.clear();
+        for(Appointment appointment : clinicManager.getAppointments()){
+            appointmentListModel.addElement("ID: " + appointment.getBookingId() + ": " +
+                    appointment.getTreatment().getName() + " | " +
+                    appointment.getPatient().getName() + " | " +
+                    appointment.getStatus());
+
+        }
+
     }
 }

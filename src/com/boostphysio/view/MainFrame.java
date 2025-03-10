@@ -1,9 +1,14 @@
 package com.boostphysio.view;
 
+import com.boostphysio.controller.ClinicManager;
+
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
+
+    private ClinicManager clinicManager;
     public MainFrame() {
+        this.clinicManager = new ClinicManager();
         //Set Window title
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Boost Physio Clinic Booking System");
