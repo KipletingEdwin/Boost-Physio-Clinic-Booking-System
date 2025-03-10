@@ -12,8 +12,21 @@ public class ManagementPanel extends JPanel {
         JList<String> patientList = new JList<>(patientListModel);
         JScrollPane scrollPane = new JScrollPane(patientList);
 
+        //Add and Remove buttons
+        JPanel buttonPanel = new JPanel();
+        JTextField patientNameField = new JTextField(10);
+        buttonPanel.add(new JLabel("Patient Name: "));
+        buttonPanel.add(patientNameField);
+        JButton addButton = new JButton("Add Patient");
+        JButton removeButton = new JButton("Remove Patient");
+        buttonPanel.add(addButton);
+        buttonPanel.add(removeButton);
 
-        JLabel label = new JLabel("Management Panel");
-        add(label);
+        //Add Components to Panel
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+
+
     }
 }
