@@ -34,12 +34,19 @@ public class ClinicManager {
         this.physiotherapists = new ArrayList<>();
         this.patients = new ArrayList<>();
         this.appointments = new ArrayList<>();
+        this.bookingIdCounter = 1;
     }
 
     public  void  addPatient(Patient patient){
         patients.add(patient);
         System.out.println("Patient added: " + patient.getName());
     }
+
+    public void addPhysiotherapist(Physiotherapist physio) {
+        physiotherapists.add(physio);
+        System.out.println("✅ Physiotherapist added: " + physio.getName());
+    }
+
 
     public  void  removePatient(int patientId){
         patients.removeIf(patient -> patient.getId() == patientId);
