@@ -22,20 +22,24 @@ public class BookingPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(titleLabel, BorderLayout.NORTH);
 
-        // ✅ Initialize appointmentListModel FIRST
+        // List of Available appointments
         appointmentListModel = new DefaultListModel<>();
         appointmentList = new JList<>(appointmentListModel);
+        appointmentList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        appointmentList.setBackground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(appointmentList);
 
         // 📋 Dropdown for Selecting Expertise
         JPanel topPanel = new JPanel();
+        topPanel.setBackground(new Color(255,255,255));
         topPanel.add(new JLabel("Select Expertise:"));
         JComboBox<String> expertiseDropdown = new JComboBox<>(new String[]{"Rehabilitation", "Massage", "Osteopathy", "Acupuncture"});
         topPanel.add(expertiseDropdown);
 
         // 🔎 Search Field for Physiotherapist
         topPanel.add(new JLabel("Search Physiotherapist:"));
-        JTextField searchField = new JTextField(10);
+        JTextField searchField = new JTextField(15);
+        searchField.setFont(new Font("SansSerif", Font.PLAIN,14));
         topPanel.add(searchField);
 
         // 🎟️ Buttons for Booking, Canceling, and Attending Appointments
@@ -43,6 +47,17 @@ public class BookingPanel extends JPanel {
         JButton bookButton = new JButton("Book Appointment");
         JButton cancelButton = new JButton("Cancel Appointment");
         JButton attendButton = new JButton("Attend Appointment");
+
+        //Style Buttons
+        bookButton.setBackground(new Color(46,204,113));
+        cancelButton.setBackground(new Color(231,76,60));
+        attendButton.setBackground(new Color(241,196,15));
+
+        bookButton.setFont(new Font("SansSerif", Font.BOLD,14));
+        cancelButton.setFont(new Font("SansSerif", Font.BOLD,14));
+        attendButton.setFont(new Font("SansSerif", Font.BOLD,14));
+
+
         buttonPanel.add(bookButton);
         buttonPanel.add(cancelButton);
         buttonPanel.add(attendButton);
