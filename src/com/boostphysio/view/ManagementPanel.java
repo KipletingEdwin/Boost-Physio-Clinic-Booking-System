@@ -1,10 +1,12 @@
 package com.boostphysio.view;
 
+import com.boostphysio.controller.ClinicManager;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ManagementPanel extends JPanel {
-    public ManagementPanel() {
+    public ManagementPanel(ClinicManager clinicManager) {
         setLayout(new BorderLayout());
 
         //Patients List

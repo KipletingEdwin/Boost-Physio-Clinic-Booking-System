@@ -1,10 +1,12 @@
 package com.boostphysio.view;
 
+import com.boostphysio.controller.ClinicManager;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ReportPanel extends JPanel {
-    public ReportPanel() {
+    public ReportPanel(ClinicManager clinicManager) {
         //Add report panel components here
         setLayout(new BorderLayout());
 

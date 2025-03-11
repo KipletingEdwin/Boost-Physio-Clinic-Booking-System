@@ -14,6 +14,21 @@ public class ClinicManager {
     private  List<Appointment> appointments;
     private int bookingIdCounter;
 
+    public List<Physiotherapist> getPhysiotherapists() {
+        return physiotherapists;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public int getBookingIdCounter() {
+        return bookingIdCounter;
+    }
 
     public  ClinicManager (){
         this.physiotherapists = new ArrayList<>();
@@ -50,6 +65,17 @@ public class ClinicManager {
             if(appointment.getBookingId() == bookingId){
                 appointment.cancel();
                 System.out.println("Appointment cancelled: ID " + bookingId);
+                return;
+            }
+        }
+        System.out.println("Appointment not found: ID " + bookingId);
+    }
+
+    public  void  attendAppointment(int bookingId){
+        for (Appointment appointment : appointments){
+            if(appointment.getBookingId() == bookingId){
+                appointment.attend();
+                System.out.println("Appointment attended: ID " + bookingId);
                 return;
             }
         }
