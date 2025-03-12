@@ -1,8 +1,6 @@
 package com.boostphysio.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Physiotherapist {
 
@@ -45,6 +43,22 @@ public class Physiotherapist {
     public String getName() {
         return name;
     }
+
+    //Generate four week schedule with available slots
+    private  Map<String,List<String>> generate4WeekSchedule(){
+        Map<String,List<String>> schedule = new LinkedHashMap<>();
+        Calendar calendar = Calendar.getInstance();
+
+        for(int i=0;i<4;i++){
+            calendar.add(Calendar.DATE,7);
+            String date = String.format("%tY-%tm-%td", calendar, calendar, calendar);
+            schedule.put(date,Arrays.asList("09:00-10:00","10:30-11:30","14:00-15:00","16:30-17:30"));
+        }
+        return schedule;
+    }
+
+    //Remove a booked time slot
+
 
 
 
