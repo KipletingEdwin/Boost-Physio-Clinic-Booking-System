@@ -2,6 +2,7 @@ package com.boostphysio.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Physiotherapist {
 
@@ -10,6 +11,7 @@ public class Physiotherapist {
     private  String contact;
     private List<String> expertise;
     private List<Treatment> treatments;
+    private Map<String, List<String>> schedule;
 
     public Physiotherapist(int id, String name, String contact, List<String> expertise){
         this.id = id;
