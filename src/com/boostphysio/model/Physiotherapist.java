@@ -13,12 +13,17 @@ public class Physiotherapist {
     private List<Treatment> treatments;
     private Map<String, List<String>> schedule;
 
+    public Map<String, List<String>> getSchedule() {
+        return schedule;
+    }
+
     public Physiotherapist(int id, String name, String contact, List<String> expertise){
         this.id = id;
         this.name = name;
         this.contact = contact;
         this.expertise = new ArrayList<>(expertise);
         this.treatments = new ArrayList<>();
+        this.schedule = generate4WeekSchedule();
     }
 
     public int getId() {
@@ -40,6 +45,8 @@ public class Physiotherapist {
     public String getName() {
         return name;
     }
+
+
 
     public  void  addTreatment(Treatment treatment){
         treatments.add(treatment);
