@@ -10,6 +10,8 @@ public class BookingPanel extends JPanel {
     private ClinicManager clinicManager;
     private DefaultListModel<String> appointmentListModel;
     private JList<String> appointmentList;
+    private  JComboBox<String> dateDropdown;
+    private  JComboBox<String> timeDropdown;
 
     public BookingPanel(ClinicManager clinicManager) {
         this.clinicManager = clinicManager;
