@@ -58,7 +58,11 @@ public class Physiotherapist {
     }
 
     //Remove a booked time slot
-
+    public  void  removeBookedSlot(String date, String timeSlot){
+        if(schedule.containsKey(date)){
+            schedule.get(date).remove(timeSlot);
+        }
+    }
 
 
 
