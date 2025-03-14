@@ -85,6 +85,14 @@ public class Main {
         for (Physiotherapist physio : clinicManager.getPhysiotherapists()) {
             System.out.println(physio.getId() + " - " + physio.getName());
         }
+        System.out.print("👨‍⚕️ Select Physiotherapist ID: ");
+        int physioId = scanner.nextInt();
+        scanner.nextLine();
 
+        Physiotherapist selectedPhysio = clinicManager.getPhysiotherapists().stream()
+                .filter(p -> p.getId() == physioId)
+                .findFirst()
+                .orElse(null);
     }
+
 }
