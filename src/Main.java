@@ -56,5 +56,18 @@ public class Main {
         // Add sample Patients
         Patient patient1 = new Patient(1, "Alice Johnson", "0551234567");
         Patient patient2 = new Patient(2, "Bob Williams", "0667654321");
+        clinicManager.addPatient(patient1);
+        clinicManager.addPatient(patient2);
+    }
+    public  static  void  addPatient(){
+        System.out.print("👤 Enter Patient Name: ");
+        String name = scanner.nextLine();
+        System.out.print("📞 Enter Contact: ");
+        String contact = scanner.nextLine();
+
+        int id = clinicManager.getPatients().size() + 1;
+        Patient patient = new Patient(id, name, contact);
+        clinicManager.addPatient(patient);
+        System.out.println("✅ Patient Added: " + name);
     }
 }
