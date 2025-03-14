@@ -72,6 +72,11 @@ public class Main {
     }
 
     private  static  void  removePatient(){
+        System.out.print("🔍 Enter Patient ID to Remove: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
 
+        clinicManager.removePatient(id);
+        System.out.println("✅ Patient Removed.");
     }
 }
