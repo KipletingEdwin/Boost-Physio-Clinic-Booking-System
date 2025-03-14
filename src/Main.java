@@ -1,6 +1,7 @@
 import com.boostphysio.controller.ClinicManager;
 import com.boostphysio.model.Patient;
 import com.boostphysio.model.Physiotherapist;
+import com.boostphysio.model.Treatment;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -93,6 +94,53 @@ public class Main {
                 .filter(p -> p.getId() == physioId)
                 .findFirst()
                 .orElse(null);
+
+        if(selectedPhysio == null){
+            System.out.println("❌ Invalid Physiotherapist ID!");
+            return;
+        }
+        System.out.println("📅 Enter Date (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        System.out.println("⏰ Enter Time (e.g., 10:00-11:00): ");
+        String time = scanner.nextLine();
+
+        System.out.println("🧑‍🦱 Available Patients:");
+        for (Patient patient : clinicManager.getPatients()) {
+            System.out.println(patient.getId() + " - " + patient.getName());
+        }
+
+        System.out.print("👤 Select Patient ID: ");
+        int patientId = scanner.nextInt();
+        scanner.nextLine();
+
+        Patient selectedPatient = clinicManager.getPatients().stream()
+                .filter(p -> p.getId() == patientId)
+                .findFirst()
+                .orElse(null);
+
+        if (selectedPatient == null) {
+            System.out.println("❌ Invalid Patient ID!");
+            return;
+        }
+
+        Treatment treatment = new Treatment("Physiotheraphy Session", date,time,selectedPhysio);
+        boolean success = clinicManager.bookAppointment(selectedPatient,treatment,selectedPhysio);
+
+        if(success){
+            System.out.println("✅ Appointment Booked!");
+        }
+    }
+
+    private  static  void  cancelAppointment(){
+        System.out.print("❌ Enter Booking ID to Cancel: ");
+        int bookingId = scanner.nextInt();
+        scanner.nextLine();
+
+        clinicManager.cancelAppointment(bookingId);
+    }
+
+    private  static  void  attendAppointment(){
+
     }
 
 }
