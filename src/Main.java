@@ -81,6 +81,10 @@ public class Main {
     }
 
     public  static void bookAppointment(){
+        System.out.println("🔎 Available Physiotherapists:");
+        for (Physiotherapist physio : clinicManager.getPhysiotherapists()) {
+            System.out.println(physio.getId() + " - " + physio.getName());
+        }
 
     }
 }
