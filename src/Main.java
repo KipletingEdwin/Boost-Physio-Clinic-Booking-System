@@ -79,4 +79,8 @@ public class Main {
         clinicManager.removePatient(id);
         System.out.println("✅ Patient Removed.");
     }
+
+    public  static void bookAppointment(){
+
+    }
 }
