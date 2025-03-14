@@ -1,4 +1,5 @@
 import com.boostphysio.controller.ClinicManager;
+import com.boostphysio.model.Patient;
 import com.boostphysio.model.Physiotherapist;
 
 import java.util.Arrays;
@@ -53,5 +54,7 @@ public class Main {
         clinicManager.addPhysiotherapist(physio2);
 
         // Add sample Patients
+        Patient patient1 = new Patient(1, "Alice Johnson", "0551234567");
+        Patient patient2 = new Patient(2, "Bob Williams", "0667654321");
     }
 }
