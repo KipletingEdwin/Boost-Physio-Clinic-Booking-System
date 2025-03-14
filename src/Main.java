@@ -70,4 +70,8 @@ public class Main {
         clinicManager.addPatient(patient);
         System.out.println("✅ Patient Added: " + name);
     }
+
+    private  static  void  removePatient(){
+
+    }
 }
