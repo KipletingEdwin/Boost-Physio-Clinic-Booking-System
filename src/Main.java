@@ -203,13 +203,45 @@ public class Main {
     }
 
 
-    private  static  void  cancelAppointment(){
-        System.out.print("❌ Enter Booking ID to Cancel: ");
+    private static void cancelAppointment() {
+        System.out.print("👤 Enter your Patient ID to view your bookings: ");
+        int patientId = scanner.nextInt();
+        scanner.nextLine();
+
+        Patient patient = clinicManager.getPatients().stream()
+                .filter(p -> p.getId() == patientId)
+                .findFirst()
+                .orElse(null);
+
+        if (patient == null) {
+            System.out.println("❌ Invalid Patient ID.");
+            return;
+        }
+
+        List<Appointment> bookings = clinicManager.getAppointments().stream()
+                .filter(appt -> appt.getPatient().getId() == patientId && appt.getStatus().equals("Booked"))
+                .toList();
+
+        if (bookings.isEmpty()) {
+            System.out.println("😕 You have no booked appointments to cancel.");
+            return;
+        }
+
+        System.out.println("\n📋 Your Booked Appointments:");
+        for (Appointment appt : bookings) {
+            System.out.println("🆔 ID: " + appt.getBookingId()
+                    + " | " + appt.getTreatment().getDate()
+                    + " @ " + appt.getTreatment().getTime()
+                    + " | " + appt.getPhysiotherapist().getName());
+        }
+
+        System.out.print("🆔 Enter the Booking ID to cancel: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
 
         clinicManager.cancelAppointment(bookingId);
     }
+
 
     private  static  void  attendAppointment(){
         System.out.print("🎯 Enter Booking ID to Mark as Attended: ");
