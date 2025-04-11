@@ -4,11 +4,13 @@ public class Patient {
 
     private  int id;
     private  String name;
+    private String address;
     private  String contact;
 
-    public  Patient(int id, String name, String contact){
+    public  Patient(int id, String name, String address, String contact){
         this.id = id;
         this.name = name;
+        this.address = address;
         this.contact = contact;
     }
 
@@ -20,7 +22,12 @@ public class Patient {
         return name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public String getContact() {
         return contact;
     }
+
 }

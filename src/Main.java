@@ -5,9 +5,6 @@ import com.boostphysio.model.Physiotherapist;
 import com.boostphysio.model.Treatment;
 
 import java.util.*;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     public static final Scanner scanner = new Scanner(System.in);
@@ -49,25 +46,35 @@ public class Main {
 
     private  static void setUpSampleData(){
         // Add sample Physiotherapist
-        Physiotherapist physio1 = new Physiotherapist(1, "Dr. Helen Smith", "0123456789", Arrays.asList("Massage", "Rehabilitation"));
-        Physiotherapist physio2 = new Physiotherapist(2, "Dr. James Lee", "0987654321", Arrays.asList("Acupuncture", "Osteopathy"));
-        clinicManager.addPhysiotherapist(physio1);
-        clinicManager.addPhysiotherapist(physio2);
+        clinicManager.addPhysiotherapist(new Physiotherapist(1, "Dr. Helen Smith", "123 Wellness St.", "0123456789", Arrays.asList("Massage", "Rehabilitation")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(2, "Dr. James Lee", "456 Recovery Rd.", "0987654321", Arrays.asList("Acupuncture", "Osteopathy")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(3, "Dr. Sarah Patel", "789 Spine Way", "0112233445", Arrays.asList("Physiotherapy", "Mobilisation")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(4, "Dr. Thomas Kim", "321 Movement Ave", "0765432198", Arrays.asList("Pool rehabilitation", "Rehabilitation")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(5, "Dr. Maria Gonzalez", "654 Joint St.", "0887654321", Arrays.asList("Massage", "Neural mobilisation")));
 
         // Add sample Patients
-        Patient patient1 = new Patient(1, "Alice Johnson", "0551234567");
-        Patient patient2 = new Patient(2, "Bob Williams", "0667654321");
-        clinicManager.addPatient(patient1);
-        clinicManager.addPatient(patient2);
+        clinicManager.addPatient(new Patient(1, "Alice Johnson", "101 Main Street", "0551234567"));
+        clinicManager.addPatient(new Patient(2, "Bob Williams", "202 Lakeview Blvd", "0667654321"));
+        clinicManager.addPatient(new Patient(3, "Cathy Miller", "303 Hilltop Rd", "0776543210"));
+        clinicManager.addPatient(new Patient(4, "David Brown", "404 Green Lane", "0881234567"));
+        clinicManager.addPatient(new Patient(5, "Ella White", "505 Oak Crescent", "0998765432"));
+        clinicManager.addPatient(new Patient(6, "Frank Thomas", "606 Wellness Dr", "0654321987"));
+        clinicManager.addPatient(new Patient(7, "Grace Evans", "707 Harmony Pl", "0765432198"));
+        clinicManager.addPatient(new Patient(8, "Hannah Green", "808 Sunset St", "0876543212"));
+        clinicManager.addPatient(new Patient(9, "Isaac Young", "909 Sunrise Ave", "0987654321"));
+        clinicManager.addPatient(new Patient(10, "Julia King", "1010 Meadow View", "0678123456"));
+
     }
     public  static  void  addPatient(){
         System.out.print("👤 Enter Patient Name: ");
         String name = scanner.nextLine();
+        System.out.print("📞 Enter Address: ");
+        String address = scanner.nextLine();
         System.out.print("📞 Enter Contact: ");
         String contact = scanner.nextLine();
 
         int id = clinicManager.getPatients().size() + 1;
-        Patient patient = new Patient(id, name, contact);
+        Patient patient = new Patient(id, name, address,contact);
         clinicManager.addPatient(patient);
         System.out.println("✅ Patient Added: " + name);
     }

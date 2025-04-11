@@ -55,4 +55,13 @@ public class Appointment {
     public  void  attend(){
         status = "Attended";
     }
+
+    @Override
+    public String toString() {
+        return "Appointment ID: " + bookingId + " | " +
+                "Patient: " + patient.getName() + " | " +
+                "Date: " + treatment.getDate() + " | " +
+                "Time: " + treatment.getTime() + " | " +
+                "Status: " + status;
+    }
 }

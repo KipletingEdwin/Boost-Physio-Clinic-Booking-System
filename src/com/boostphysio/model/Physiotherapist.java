@@ -5,6 +5,7 @@ import java.util.*;
 public class Physiotherapist {
     private int id;
     private String name;
+    private String address;
     private String contact;
     private List<String> expertise;
     private List<Treatment> treatments;
@@ -14,9 +15,10 @@ public class Physiotherapist {
         return schedule;
     }
 
-    public Physiotherapist(int id, String name, String contact, List<String> expertise) {
+    public Physiotherapist(int id, String name, String address, String contact, List<String> expertise) {
         this.id = id;
         this.name = name;
+        this.address = address;
         this.contact = contact;
         this.expertise = new ArrayList<>(expertise);
         this.treatments = new ArrayList<>();
@@ -33,6 +35,10 @@ public class Physiotherapist {
 
     public List<String> getExpertise() {
         return expertise;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public String getContact() {
