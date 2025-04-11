@@ -14,6 +14,14 @@ public class ClinicManager {
     private  List<Appointment> appointments;
     private int bookingIdCounter;
 
+
+    public  ClinicManager (){
+        this.physiotherapists = new ArrayList<>();
+        this.patients = new ArrayList<>();
+        this.appointments = new ArrayList<>();
+        this.bookingIdCounter = 1;
+    }
+
     public List<Physiotherapist> getPhysiotherapists() {
         return physiotherapists;
     }
@@ -30,21 +38,15 @@ public class ClinicManager {
         return bookingIdCounter;
     }
 
-    public  ClinicManager (){
-        this.physiotherapists = new ArrayList<>();
-        this.patients = new ArrayList<>();
-        this.appointments = new ArrayList<>();
-        this.bookingIdCounter = 1;
-    }
 
     public  void  addPatient(Patient patient){
         patients.add(patient);
-        System.out.println("Patient added: " + patient.getName());
+        System.out.println("Patient added successfully: " + patient.getName());
     }
 
     public void addPhysiotherapist(Physiotherapist physio) {
         physiotherapists.add(physio);
-        System.out.println("✅ Physiotherapist added: " + physio.getName());
+        System.out.println("✅ Physiotherapist added successfully: " + physio.getName());
     }
 
 
@@ -105,26 +107,39 @@ public class ClinicManager {
     public boolean changeAppointment(int bookingId, Treatment newTreatment, Physiotherapist newPhysio) {
         for (Appointment appointment : appointments) {
             if (appointment.getBookingId() == bookingId) {
-                // Check if the new time slot is available
+                // Check for time conflict
                 for (Appointment existing : appointments) {
-                    if (existing.getTreatment().getDate().equals(newTreatment.getDate()) &&
-                            existing.getTreatment().getTime().equals(newTreatment.getTime())) {
-                        System.out.println("❌ Change failed! The new slot is already booked.");
+                    if (existing.getBookingId() != bookingId &&
+                            existing.getTreatment().getDate().equals(newTreatment.getDate()) &&
+                            existing.getTreatment().getTime().equals(newTreatment.getTime()) &&
+                            existing.getPatient().getId() == appointment.getPatient().getId()) {
+                        System.out.println("❌ Time conflict for this patient.");
+                        return false;
+                    }
+
+                    if (existing.getBookingId() != bookingId &&
+                            existing.getTreatment().getDate().equals(newTreatment.getDate()) &&
+                            existing.getTreatment().getTime().equals(newTreatment.getTime()) &&
+                            existing.getPhysiotherapist().getId() == newPhysio.getId()) {
+                        System.out.println("❌ This physiotherapist is already booked for that time.");
                         return false;
                     }
                 }
 
-                // Cancel old appointment and book a new one
-                appointment.cancel();
-                Appointment newAppointment = new Appointment(bookingIdCounter++, appointment.getPatient(), newTreatment, newPhysio);
-                appointments.add(newAppointment);
-                System.out.println("✅ Appointment changed successfully: New Treatment - " + newTreatment.getName());
+                // ✅ No conflict → update the existing appointment
+                appointment.setTreatment(newTreatment);
+                appointment.setPhysiotherapist(newPhysio);
+                appointment.setStatus("Booked");
+
+                System.out.println("✅ Appointment updated with the same Booking ID.");
                 return true;
             }
         }
+
         System.out.println("❌ Booking ID not found.");
         return false;
     }
+
 
 
     public void generateReport() {

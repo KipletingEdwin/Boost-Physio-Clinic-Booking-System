@@ -1,10 +1,10 @@
 import com.boostphysio.controller.ClinicManager;
+import com.boostphysio.model.Appointment;
 import com.boostphysio.model.Patient;
 import com.boostphysio.model.Physiotherapist;
 import com.boostphysio.model.Treatment;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -19,14 +19,14 @@ public class Main {
 
         while (true){
             System.out.println("\n=== Boost Physio Clinic ===");
-            System.out.println("1️⃣ Add a Patient");
-            System.out.println("2️⃣ Remove a Patient");
-            System.out.println("3️⃣ Book an Appointment");
-            System.out.println("4️⃣ Cancel an Appointment");
-            System.out.println("5️⃣ Attend an Appointment");
-            System.out.println("6️⃣ Generate Report");
-            System.out.println("7️⃣ Exit");
-            System.out.print("🔷 Select an option: ");
+            System.out.println("1.Add a Patient");
+            System.out.println("2.Remove a Patient");
+            System.out.println("3.Book an Appointment");
+            System.out.println("4.Cancel an Appointment");
+            System.out.println("5.Attend an Appointment");
+            System.out.println("6.Generate Report");
+            System.out.println("7.Exit");
+            System.out.println("🔷 Select an option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -81,29 +81,86 @@ public class Main {
         System.out.println("✅ Patient Removed.");
     }
 
-    public  static void bookAppointment(){
-        System.out.println("🔎 Available Physiotherapists:");
-        for (Physiotherapist physio : clinicManager.getPhysiotherapists()) {
-            System.out.println(physio.getId() + " - " + physio.getName());
+    public static void bookAppointment() {
+        System.out.println("\n📋 Choose booking method:");
+        System.out.println("1. Search by Expertise");
+        System.out.println("2. Search by Physiotherapist");
+        System.out.print("➡️ Enter option: ");
+        int method = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Physiotherapist> physios = clinicManager.getPhysiotherapists();
+        Physiotherapist selectedPhysio = null;
+
+        if (method == 1) {
+            System.out.print("🔍 Enter area of expertise (e.g. Massage): ");
+            String expertise = scanner.nextLine();
+
+            System.out.println("📋 Physiotherapists with expertise in '" + expertise + "':");
+            for (Physiotherapist physio : physios) {
+                if (physio.getExpertise().contains(expertise)) {
+                    System.out.println(physio.getId() + " - " + physio.getName());
+                }
+            }
+        } else if (method == 2) {
+            System.out.println("🧑‍⚕️ Available Physiotherapists:");
+            for (Physiotherapist physio : physios) {
+                System.out.println(physio.getId() + " - " + physio.getName());
+            }
+        } else {
+            System.out.println("❌ Invalid option.");
+            return;
         }
+
+        // Select physiotherapist
         System.out.print("👨‍⚕️ Select Physiotherapist ID: ");
         int physioId = scanner.nextInt();
         scanner.nextLine();
 
-        Physiotherapist selectedPhysio = clinicManager.getPhysiotherapists().stream()
+        selectedPhysio = physios.stream()
                 .filter(p -> p.getId() == physioId)
                 .findFirst()
                 .orElse(null);
 
-        if(selectedPhysio == null){
+        if (selectedPhysio == null) {
             System.out.println("❌ Invalid Physiotherapist ID!");
             return;
         }
-        System.out.println("📅 Enter Date (YYYY-MM-DD): ");
-        String date = scanner.nextLine();
-        System.out.println("⏰ Enter Time (e.g., 10:00-11:00): ");
-        String time = scanner.nextLine();
 
+        // Display and number available slots
+        List<String[]> availableSlots = new ArrayList<>();
+        int index = 1;
+
+        System.out.println("\n📅 Available Appointment Slots:");
+        for (Map.Entry<String, List<String>> entry : selectedPhysio.getSchedule().entrySet()) {
+            String date = entry.getKey();
+            for (String timeSlot : entry.getValue()) {
+                System.out.println(index + ". " + date + " @ " + timeSlot);
+                availableSlots.add(new String[]{date, timeSlot});
+                index++;
+            }
+        }
+
+        if (availableSlots.isEmpty()) {
+            System.out.println("❌ No available slots for this physiotherapist.");
+            return;
+        }
+
+        // Let user choose from the list
+        System.out.print("➡️ Choose a slot number: ");
+        int slotChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (slotChoice < 1 || slotChoice > availableSlots.size()) {
+            System.out.println("❌ Invalid slot number.");
+            return;
+        }
+
+        String[] selectedSlot = availableSlots.get(slotChoice - 1);
+        String date = selectedSlot[0];
+        String time = selectedSlot[1];
+
+        // Select patient
         System.out.println("🧑‍🦱 Available Patients:");
         for (Patient patient : clinicManager.getPatients()) {
             System.out.println(patient.getId() + " - " + patient.getName());
@@ -123,13 +180,28 @@ public class Main {
             return;
         }
 
-        Treatment treatment = new Treatment("Physiotheraphy Session", date,time,selectedPhysio);
-        boolean success = clinicManager.bookAppointment(selectedPatient,treatment,selectedPhysio);
+        // Create and book treatment
+        Treatment treatment = new Treatment("Physiotherapy Session", date, time, selectedPhysio);
+        boolean success = clinicManager.bookAppointment(selectedPatient, treatment, selectedPhysio);
 
-        if(success){
-            System.out.println("✅ Appointment Booked!");
+        if (success) {
+            selectedPhysio.removeBookedSlot(date, time);
+
+            Appointment newAppt = clinicManager.getAppointments().get(clinicManager.getAppointments().size() - 1);
+
+            System.out.println("\n✅ Appointment Booked Successfully!");
+            System.out.println("📄 Booking ID: " + newAppt.getBookingId());
+            System.out.println("👤 Patient: " + newAppt.getPatient().getName());
+            System.out.println("🧑‍⚕️ Physio: " + newAppt.getPhysiotherapist().getName());
+            System.out.println("💆 Treatment: " + newAppt.getTreatment().getName());
+            System.out.println("📅 Date: " + newAppt.getTreatment().getDate());
+            System.out.println("⏰ Time: " + newAppt.getTreatment().getTime());
+            System.out.println("📌 Status: " + newAppt.getStatus());
+        } else {
+            System.out.println("❌ Appointment booking failed.");
         }
     }
+
 
     private  static  void  cancelAppointment(){
         System.out.print("❌ Enter Booking ID to Cancel: ");
@@ -140,7 +212,10 @@ public class Main {
     }
 
     private  static  void  attendAppointment(){
+        System.out.print("🎯 Enter Booking ID to Mark as Attended: ");
+        int bookingId = scanner.nextInt();
+        scanner.nextLine();
 
+        clinicManager.attendAppointment(bookingId);
     }
-
 }

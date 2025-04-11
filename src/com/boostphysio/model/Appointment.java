@@ -15,6 +15,19 @@ public class Appointment {
         this.status = "Booked";
     }
 
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
+    public void setPhysiotherapist(Physiotherapist physiotherapist) {
+        this.physiotherapist = physiotherapist;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
     public int getBookingId() {
         return bookingId;
     }
