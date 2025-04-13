@@ -46,25 +46,27 @@ public class Main {
 
     private  static void setUpSampleData(){
         // Add sample Physiotherapist
-        clinicManager.addPhysiotherapist(new Physiotherapist(1, "Dr. Helen Smith", "123 Wellness St.", "0123456789", Arrays.asList("Massage", "Rehabilitation")));
-        clinicManager.addPhysiotherapist(new Physiotherapist(2, "Dr. James Lee", "456 Recovery Rd.", "0987654321", Arrays.asList("Acupuncture", "Osteopathy")));
-        clinicManager.addPhysiotherapist(new Physiotherapist(3, "Dr. Sarah Patel", "789 Spine Way", "0112233445", Arrays.asList("Physiotherapy", "Mobilisation")));
-        clinicManager.addPhysiotherapist(new Physiotherapist(4, "Dr. Thomas Kim", "321 Movement Ave", "0765432198", Arrays.asList("Pool rehabilitation", "Rehabilitation")));
-        clinicManager.addPhysiotherapist(new Physiotherapist(5, "Dr. Maria Gonzalez", "654 Joint St.", "0887654321", Arrays.asList("Massage", "Neural mobilisation")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(1, "Dr. Zoe Miller", "111 Movement Rd.", "0751122334", Arrays.asList("Physiotherapy", "Massage")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(2, "Dr. Ryan Brooks", "222 Recovery Blvd.", "0762233445", Arrays.asList("Mobilisation of the spine and joints", "Osteopathy")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(3, "Dr. Emily Chen", "333 Alignment Ave", "0773344556", Arrays.asList("Acupuncture", "Rehabilitation")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(4, "Dr. Jason Turner", "444 Spine Park", "0784455667", Arrays.asList("Neural mobilisation", "Massage")));
+        clinicManager.addPhysiotherapist(new Physiotherapist(5, "Dr. Megan Scott", "555 Flex Lane", "0795566778", Arrays.asList("Pool rehabilitation", "Rehabilitation")));
+
 
         // Add sample Patients
-        clinicManager.addPatient(new Patient(1, "Alice Johnson", "101 Main Street", "0551234567"));
-        clinicManager.addPatient(new Patient(2, "Bob Williams", "202 Lakeview Blvd", "0667654321"));
-        clinicManager.addPatient(new Patient(3, "Cathy Miller", "303 Hilltop Rd", "0776543210"));
-        clinicManager.addPatient(new Patient(4, "David Brown", "404 Green Lane", "0881234567"));
-        clinicManager.addPatient(new Patient(5, "Ella White", "505 Oak Crescent", "0998765432"));
-        clinicManager.addPatient(new Patient(6, "Frank Thomas", "606 Wellness Dr", "0654321987"));
-        clinicManager.addPatient(new Patient(7, "Grace Evans", "707 Harmony Pl", "0765432198"));
-        clinicManager.addPatient(new Patient(8, "Hannah Green", "808 Sunset St", "0876543212"));
-        clinicManager.addPatient(new Patient(9, "Isaac Young", "909 Sunrise Ave", "0987654321"));
-        clinicManager.addPatient(new Patient(10, "Julia King", "1010 Meadow View", "0678123456"));
+        clinicManager.addPatient(new Patient(1, "Kevin Adams", "111 Fitness St", "0567812345"));
+        clinicManager.addPatient(new Patient(2, "Linda Baker", "212 Motion Rd", "0678923456"));
+        clinicManager.addPatient(new Patient(3, "Michael Carter", "313 Balance Blvd", "0789034567"));
+        clinicManager.addPatient(new Patient(4, "Natalie Diaz", "414 Spine Ct", "0890145678"));
+        clinicManager.addPatient(new Patient(5, "Owen Edwards", "515 Stretch Ave", "0901256789"));
+        clinicManager.addPatient(new Patient(6, "Paula Flores", "616 Physio Dr", "0912367890"));
+        clinicManager.addPatient(new Patient(7, "Quinn Graham", "717 Health Loop", "0923478901"));
+        clinicManager.addPatient(new Patient(8, "Rachel Hughes", "818 Recovery Pkwy", "0934589012"));
+        clinicManager.addPatient(new Patient(9, "Samuel Ingram", "919 Core Ln", "0945690123"));
+        clinicManager.addPatient(new Patient(10, "Tina Jenkins", "1020 Therapy Way", "0956701234"));
 
     }
+
     public  static  void  addPatient(){
         System.out.print("👤 Enter Patient Name: ");
         String name = scanner.nextLine();

@@ -2,12 +2,12 @@ package com.boostphysio.model;
 
 public class Patient {
 
-    private  int id;
-    private  String name;
+    private int id;
+    private String name;
     private String address;
-    private  String contact;
+    private String contact;
 
-    public  Patient(int id, String name, String address, String contact){
+    public Patient(int id, String name, String address, String contact) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -30,4 +30,8 @@ public class Patient {
         return contact;
     }
 
+    @Override
+    public String toString() {
+        return name + " | Address: " + address + " | Contact: " + contact;
+    }
 }

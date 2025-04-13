@@ -1,32 +1,19 @@
 package com.boostphysio.model;
 
 public class Appointment {
-    private  int bookingId;
-    private  Patient patient;
-    private  Treatment treatment;
-    private  Physiotherapist physiotherapist;
-    private  String status;
+    private int bookingId;
+    private Patient patient;
+    private Treatment treatment;
+    private Physiotherapist physiotherapist;
+    private String status;
 
-    public  Appointment(int bookingId, Patient patient,Treatment treatment, Physiotherapist physiotherapist){
+    public Appointment(int bookingId, Patient patient, Treatment treatment, Physiotherapist physiotherapist) {
         this.bookingId = bookingId;
         this.patient = patient;
         this.treatment = treatment;
         this.physiotherapist = physiotherapist;
         this.status = "Booked";
     }
-
-    public void setTreatment(Treatment treatment) {
-        this.treatment = treatment;
-    }
-
-    public void setPhysiotherapist(Physiotherapist physiotherapist) {
-        this.physiotherapist = physiotherapist;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 
     public int getBookingId() {
         return bookingId;
@@ -48,20 +35,32 @@ public class Appointment {
         return status;
     }
 
-    public  void  cancel(){
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
+    public void setPhysiotherapist(Physiotherapist physiotherapist) {
+        this.physiotherapist = physiotherapist;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void cancel() {
         status = "Cancelled";
     }
 
-    public  void  attend(){
+    public void attend() {
         status = "Attended";
     }
 
     @Override
     public String toString() {
-        return "Appointment ID: " + bookingId + " | " +
-                "Patient: " + patient.getName() + " | " +
-                "Date: " + treatment.getDate() + " | " +
-                "Time: " + treatment.getTime() + " | " +
-                "Status: " + status;
+        return "Appointment ID: " + bookingId +
+                " | Patient: " + patient.getName() +
+                " | Date: " + treatment.getFormattedDateWithDay() +
+                " | Time: " + treatment.getTime() +
+                " | Status: " + status;
     }
 }
