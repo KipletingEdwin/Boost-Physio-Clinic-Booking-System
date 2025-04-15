@@ -84,6 +84,17 @@ class ClinicManagerTest {
 
     @Test
     void attendAppointment() {
+        Patient patient = new Patient(1, "Liam Ford", "998 Street Ln", "0765432100");
+        Physiotherapist physio = new Physiotherapist(1, "Dr. Megan Fields", "445 Healing Blvd", "0771122334", Arrays.asList("Acupuncture"));
+        clinicManager.addPatient(patient);
+        clinicManager.addPhysiotherapist(physio);
+        String date = physio.getSchedule().keySet().iterator().next();
+        String time = physio.getSchedule().get(date).get(0);
+        Treatment treatment = new Treatment("Acupuncture", date, time, physio);
+        clinicManager.bookAppointment(patient, treatment, physio);
+        int bookingId = clinicManager.getAppointments().get(0).getBookingId();
+        clinicManager.attendAppointment(bookingId);
+        assertEquals("Attended", clinicManager.getAppointments().get(0).getStatus());
     }
 
     @Test
