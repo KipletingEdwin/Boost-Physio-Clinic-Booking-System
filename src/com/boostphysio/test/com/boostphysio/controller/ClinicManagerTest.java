@@ -3,6 +3,7 @@ package com.boostphysio.controller;
 import com.boostphysio.model.Patient;
 import com.boostphysio.controller.ClinicManager;
 import com.boostphysio.model.Physiotherapist;
+import com.boostphysio.model.Treatment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,17 @@ class ClinicManagerTest {
 
     @Test
     void cancelAppointment() {
+        Patient patient = new Patient(1, "Eve Lin", "123 Test St", "0911223344");
+        Physiotherapist physio = new Physiotherapist(1, "Dr. Rick Mason", "456 Wellness Rd", "0998877665", Arrays.asList("Massage"));
+        clinicManager.addPatient(patient);
+        clinicManager.addPhysiotherapist(physio);
+        String date = physio.getSchedule().keySet().iterator().next();
+        String time = physio.getSchedule().get(date).get(0);
+        Treatment treatment = new Treatment("Massage", date, time, physio);
+        clinicManager.bookAppointment(patient, treatment, physio);
+        int bookingId = clinicManager.getAppointments().get(0).getBookingId();
+        clinicManager.cancelAppointment(bookingId);
+        assertEquals("Cancelled", clinicManager.getAppointments().get(0).getStatus());
     }
 
     @Test
