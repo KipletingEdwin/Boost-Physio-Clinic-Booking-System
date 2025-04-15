@@ -2,9 +2,12 @@ package com.boostphysio.controller;
 
 import com.boostphysio.model.Patient;
 import com.boostphysio.controller.ClinicManager;
+import com.boostphysio.model.Physiotherapist;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,6 +52,10 @@ class ClinicManagerTest {
 
     @Test
     void addPhysiotherapist() {
+        Physiotherapist physio = new Physiotherapist(1, "Dr. Olivia White", "789 Align St", "0887654321", Arrays.asList("Rehabilitation", "Massage"));
+        clinicManager.addPhysiotherapist(physio);
+        assertEquals(1, clinicManager.getPhysiotherapists().size());
+        assertEquals("Dr. Olivia White", clinicManager.getPhysiotherapists().get(0).getName());
     }
 
     @Test
