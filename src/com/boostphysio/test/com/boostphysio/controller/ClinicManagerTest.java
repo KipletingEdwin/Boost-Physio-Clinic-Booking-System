@@ -155,5 +155,6 @@ class ClinicManagerTest {
 
     @Test
     void generateReport() {
+        clinicManager.generateReport();
     }
 }
