@@ -94,36 +94,39 @@ public class ClinicManager {
     public boolean changeAppointment(int bookingId, Treatment newTreatment, Physiotherapist newPhysio) {
         for (Appointment appointment : appointments) {
             if (appointment.getBookingId() == bookingId) {
+                // Check for conflict
                 for (Appointment existing : appointments) {
                     if (existing.getBookingId() != bookingId &&
                             existing.getTreatment().getDate().equals(newTreatment.getDate()) &&
                             existing.getTreatment().getTime().equals(newTreatment.getTime()) &&
-                            existing.getPatient().getId() == appointment.getPatient().getId()) {
-                        System.out.println("❌ Time conflict for this patient.");
-                        return false;
-                    }
-
-                    if (existing.getBookingId() != bookingId &&
-                            existing.getTreatment().getDate().equals(newTreatment.getDate()) &&
-                            existing.getTreatment().getTime().equals(newTreatment.getTime()) &&
-                            existing.getPhysiotherapist().getId() == newPhysio.getId()) {
-                        System.out.println("❌ This physiotherapist is already booked for that time.");
+                            (existing.getPatient().getId() == appointment.getPatient().getId() ||
+                                    existing.getPhysiotherapist().getId() == newPhysio.getId())) {
+                        System.out.println("❌ Time conflict. Either the patient or physiotherapist is already booked.");
                         return false;
                     }
                 }
 
+                // Free old slot
+                appointment.getPhysiotherapist().getSchedule()
+                        .computeIfAbsent(appointment.getTreatment().getDate(), k -> new ArrayList<>())
+                        .add(appointment.getTreatment().getTime());
+
+                // Remove new slot
+                newPhysio.removeBookedSlot(newTreatment.getDate(), newTreatment.getTime());
+
+                // Update appointment
                 appointment.setTreatment(newTreatment);
                 appointment.setPhysiotherapist(newPhysio);
                 appointment.setStatus("Booked");
 
-                System.out.println("✅ Appointment updated with the same Booking ID.");
+                System.out.println("✅ Appointment changed successfully.");
                 return true;
             }
         }
-
         System.out.println("❌ Booking ID not found.");
         return false;
     }
+
 
     public void generateReport() {
         System.out.println("\n📊 Clinic Report (Sorted by Most Attended Appointments):");
