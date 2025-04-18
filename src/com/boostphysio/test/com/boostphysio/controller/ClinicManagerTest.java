@@ -4,6 +4,7 @@ import com.boostphysio.model.Patient;
 import com.boostphysio.controller.ClinicManager;
 import com.boostphysio.model.Physiotherapist;
 import com.boostphysio.model.Treatment;
+import com.boostphysio.model.Appointment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,6 +100,35 @@ class ClinicManagerTest {
 
     @Test
     void changeAppointment() {
+        Patient patient = new Patient(1, "Tom Hardy", "999 Sample Street", "0700000001");
+        Physiotherapist physio1 = new Physiotherapist(1, "Dr. Emma Frost", "123 Clinic Ave", "0781111111", Arrays.asList("Massage"));
+        Physiotherapist physio2 = new Physiotherapist(2, "Dr. Bruce Wayne", "456 Gotham Rd", "0782222222", Arrays.asList("Massage"));
+
+        clinicManager.addPatient(patient);
+        clinicManager.addPhysiotherapist(physio1);
+        clinicManager.addPhysiotherapist(physio2);
+
+        // Original booking
+        String originalDate = physio1.getSchedule().keySet().iterator().next();
+        String originalTime = physio1.getSchedule().get(originalDate).get(0);
+        Treatment originalTreatment = new Treatment("Massage", originalDate, originalTime, physio1);
+        clinicManager.bookAppointment(patient, originalTreatment, physio1);
+        int bookingId = clinicManager.getAppointments().get(0).getBookingId();
+
+        // New slot for change
+        String newDate = physio2.getSchedule().keySet().iterator().next();
+        String newTime = physio2.getSchedule().get(newDate).get(0);
+        Treatment newTreatment = new Treatment("Changed Massage", newDate, newTime, physio2);
+
+        boolean changed = clinicManager.changeAppointment(bookingId, newTreatment, physio2);
+
+        assertTrue(changed);
+        Appointment updated = clinicManager.getAppointments().get(0);
+
+        assertEquals(newDate, updated.getTreatment().getDate());
+        assertEquals(newTime, updated.getTreatment().getTime());
+        assertEquals("Booked", updated.getStatus());
+        assertEquals("Dr. Bruce Wayne", updated.getPhysiotherapist().getName());
     }
 
     @Test
