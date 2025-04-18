@@ -66,6 +66,11 @@ class ClinicManagerTest {
 
     @Test
     void removePatient() {
+        Patient patient = new Patient(1, "Zoe Watts", "900 Remove St", "0711111111");
+        clinicManager.addPatient(patient);
+        assertEquals(1, clinicManager.getPatients().size());
+        clinicManager.removePatient(1);
+        assertEquals(0, clinicManager.getPatients().size());
     }
 
     @Test
