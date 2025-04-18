@@ -27,6 +27,11 @@ class ClinicManagerTest {
 
     @Test
     void getPhysiotherapists() {
+        Physiotherapist physio = new Physiotherapist(1, "Dr. Alex Stone", "123 Spine St", "0789000000", Arrays.asList("Osteopathy"));
+        clinicManager.addPhysiotherapist(physio);
+
+        assertEquals(1, clinicManager.getPhysiotherapists().size());
+        assertEquals("Dr. Alex Stone", clinicManager.getPhysiotherapists().get(0).getName());
     }
 
     @Test
@@ -45,7 +50,6 @@ class ClinicManagerTest {
     void addPatient() {
         Patient patient = new Patient(1, "John Smith", "456 Hilltop Rd", "0771234567");
         clinicManager.addPatient(patient);
-
         assertEquals(1, clinicManager.getPatients().size());
         assertEquals("John Smith", clinicManager.getPatients().get(0).getName());
         assertEquals("456 Hilltop Rd", clinicManager.getPatients().get(0).getAddress());
