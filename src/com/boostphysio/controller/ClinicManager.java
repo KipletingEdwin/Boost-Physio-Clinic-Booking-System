@@ -51,21 +51,21 @@ public class ClinicManager {
             if (existing.getPatient().getId() == patient.getId() &&
                     existing.getTreatment().getDate().equals(treatment.getDate()) &&
                     existing.getTreatment().getTime().equals(treatment.getTime())) {
-                System.out.println("❌ Booking failed! The patient already has an appointment at this time.");
+                System.out.println("Booking failed! The patient already has an appointment at this time.");
                 return false;
             }
 
             if (existing.getPhysiotherapist().getId() == physiotherapist.getId() &&
                     existing.getTreatment().getDate().equals(treatment.getDate()) &&
                     existing.getTreatment().getTime().equals(treatment.getTime())) {
-                System.out.println("❌ Booking failed! This slot is already booked with " + physiotherapist.getName());
+                System.out.println("Booking failed! This slot is already booked with " + physiotherapist.getName());
                 return false;
             }
         }
 
         Appointment newAppointment = new Appointment(bookingIdCounter++, patient, treatment, physiotherapist);
         appointments.add(newAppointment);
-        System.out.println("✅ Appointment booked: " + treatment.getName() + " with " + physiotherapist.getName());
+        System.out.println("Appointment booked: " + treatment.getName() + " with " + physiotherapist.getName());
         return true;
     }
 
@@ -101,7 +101,7 @@ public class ClinicManager {
                             existing.getTreatment().getTime().equals(newTreatment.getTime()) &&
                             (existing.getPatient().getId() == appointment.getPatient().getId() ||
                                     existing.getPhysiotherapist().getId() == newPhysio.getId())) {
-                        System.out.println("❌ Time conflict. Either the patient or physiotherapist is already booked.");
+                        System.out.println("Time conflict. Either the patient or physiotherapist is already booked.");
                         return false;
                     }
                 }
@@ -119,17 +119,17 @@ public class ClinicManager {
                 appointment.setPhysiotherapist(newPhysio);
                 appointment.setStatus("Booked");
 
-                System.out.println("✅ Appointment changed successfully.");
+                System.out.println("Appointment changed successfully.");
                 return true;
             }
         }
-        System.out.println("❌ Booking ID not found.");
+        System.out.println("Booking ID not found.");
         return false;
     }
 
 
     public void generateReport() {
-        System.out.println("\n📊 Clinic Report (Sorted by Most Attended Appointments):");
+        System.out.println("\n Clinic Report (Sorted by Most Attended Appointments):");
 
         physiotherapists.sort((a, b) -> {
             long attendedA = appointments.stream()
@@ -146,7 +146,7 @@ public class ClinicManager {
 
             for (Appointment appt : appointments) {
                 if (appt.getPhysiotherapist().getId() == physio.getId()) {
-                    System.out.println("   🏥 Treatment: " + appt.getTreatment().getName() +
+                    System.out.println("  Treatment: " + appt.getTreatment().getName() +
                             " | Patient: " + appt.getPatient().getName() +
                             " | Date: " + appt.getTreatment().getFormattedDateWithDay() +
                             " | Time: " + appt.getTreatment().getTime() +

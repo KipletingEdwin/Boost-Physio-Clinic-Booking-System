@@ -68,16 +68,16 @@ public class Physiotherapist {
     public void removeBookedSlot(String date, String timeSlot) {
         if (schedule.containsKey(date) && schedule.get(date).contains(timeSlot)) {
             schedule.get(date).remove(timeSlot);
-            System.out.println("📅 Slot " + timeSlot + " on " + date + " booked for " + name);
+            System.out.println(" Slot " + timeSlot + " on " + date + " booked for " + name);
         } else {
-            System.out.println("⚠️ Slot " + timeSlot + " on " + date + " is not available!");
+            System.out.println(" Slot " + timeSlot + " on " + date + " is not available!");
         }
     }
 
     public void printAvailableSlots() {
-        System.out.println("\n📅 Available Slots for " + name);
+        System.out.println("\n Available Slots for " + name);
         for (Map.Entry<String, List<String>> entry : schedule.entrySet()) {
-            System.out.println("📆 " + entry.getKey() + " → " + entry.getValue());
+            System.out.println(" " + entry.getKey() + " → " + entry.getValue());
         }
     }
 

@@ -24,7 +24,7 @@ public class Main {
             System.out.println("6.Change Appointment");
             System.out.println("7.Generate Report");
             System.out.println("8.Exit");
-            System.out.println("🔷 Select an option: ");
+            System.out.println("Select an option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -38,10 +38,10 @@ public class Main {
                 case  6 -> changeAppointment();
                 case  7 -> clinicManager.generateReport();
                 case  8 -> {
-                    System.out.println("🚀 Exiting... Goodbye!");
+                    System.out.println("Exiting... Goodbye!");
                     return;
                 }
-                default -> System.out.println("⚠️ Invalid option! Try again.");
+                default -> System.out.println("Invalid option! Try again.");
             }
         }
     }
@@ -70,33 +70,49 @@ public class Main {
     }
 
     public  static  void  addPatient(){
-        System.out.print("👤 Enter Patient Name: ");
+        System.out.print("Enter Patient Name: ");
         String name = scanner.nextLine();
-        System.out.print("📞 Enter Address: ");
+        System.out.print("Enter Address: ");
         String address = scanner.nextLine();
-        System.out.print("📞 Enter Contact: ");
+        System.out.print("Enter Contact: ");
         String contact = scanner.nextLine();
 
         int id = clinicManager.getPatients().size() + 1;
         Patient patient = new Patient(id, name, address,contact);
         clinicManager.addPatient(patient);
-        System.out.println("✅ Patient Added: " + name);
+        System.out.println("Patient Added: " + name);
     }
 
-    private  static  void  removePatient(){
-        System.out.print("🔍 Enter Patient ID to Remove: ");
+    private static void removePatient() {
+        List<Patient> patients = clinicManager.getPatients();
+        if (patients.isEmpty()) {
+            System.out.println("❌ No patients available to remove.");
+            return;
+        }
+        System.out.println("\n Current Patients:");
+        for (Patient patient : patients) {
+            System.out.println(patient.getId() + " - " + patient.getName() + " | Address: " + patient.getAddress() + " | Contact: " + patient.getContact());
+        }
+        System.out.print("Enter Patient ID to Remove: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-
+        Optional<Patient> patientToRemove = patients.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst();
+        if (patientToRemove.isEmpty()) {
+            System.out.println("Patient ID not found.");
+            return;
+        }
+        String removedName = patientToRemove.get().getName();
         clinicManager.removePatient(id);
-        System.out.println("✅ Patient Removed.");
+        System.out.println("Patient Removed: " + removedName + " (ID " + id + ")");
     }
 
     public static void bookAppointment() {
-        System.out.println("\n📋 Choose booking method:");
+        System.out.println("\n Choose booking method:");
         System.out.println("1. Search by Expertise");
         System.out.println("2. Search by Physiotherapist");
-        System.out.print("➡️ Enter option: ");
+        System.out.print("Enter option: ");
         int method = scanner.nextInt();
         scanner.nextLine();
 
@@ -111,40 +127,40 @@ public class Main {
             }
 
             List<String> expertiseList = new ArrayList<>(allExpertise);
-            System.out.println("📋 Available Expertise Areas:");
+            System.out.println("Available Expertise Areas:");
             for (int i = 0; i < expertiseList.size(); i++) {
                 System.out.println((i + 1) + ". " + expertiseList.get(i));
             }
 
-            System.out.print("➡️ Choose an expertise by number: ");
+            System.out.print("Choose an expertise by number: ");
             int expertiseChoice = scanner.nextInt();
             scanner.nextLine();
 
             if (expertiseChoice < 1 || expertiseChoice > expertiseList.size()) {
-                System.out.println("❌ Invalid expertise selection.");
+                System.out.println("Invalid expertise selection.");
                 return;
             }
 
             String selectedExpertise = expertiseList.get(expertiseChoice - 1);
 
-            System.out.println("📋 Physiotherapists with expertise in '" + selectedExpertise + "':");
+            System.out.println("Physiotherapists with expertise in '" + selectedExpertise + "':");
             for (Physiotherapist physio : physios) {
                 if (physio.getExpertise().contains(selectedExpertise)) {
                     System.out.println(physio.getId() + " - " + physio.getName());
                 }
             }
         } else if (method == 2) {
-            System.out.println("🧑‍⚕️ Available Physiotherapists:");
+            System.out.println("Available Physiotherapists:");
             for (Physiotherapist physio : physios) {
                 System.out.println(physio.getId() + " - " + physio.getName());
             }
         } else {
-            System.out.println("❌ Invalid option.");
+            System.out.println("Invalid option.");
             return;
         }
 
         // Select physiotherapist
-        System.out.print("👨‍⚕️ Select Physiotherapist ID: ");
+        System.out.print("Select Physiotherapist ID: ");
         int physioId = scanner.nextInt();
         scanner.nextLine();
 
@@ -154,7 +170,7 @@ public class Main {
                 .orElse(null);
 
         if (selectedPhysio == null) {
-            System.out.println("❌ Invalid Physiotherapist ID!");
+            System.out.println("Invalid Physiotherapist ID!");
             return;
         }
 
@@ -162,7 +178,7 @@ public class Main {
         List<String[]> availableSlots = new ArrayList<>();
         int index = 1;
 
-        System.out.println("\n📅 Available Appointment Slots:");
+        System.out.println("\n Available Appointment Slots:");
         for (Map.Entry<String, List<String>> entry : selectedPhysio.getSchedule().entrySet()) {
             String date = entry.getKey();
             for (String timeSlot : entry.getValue()) {
@@ -173,17 +189,17 @@ public class Main {
         }
 
         if (availableSlots.isEmpty()) {
-            System.out.println("❌ No available slots for this physiotherapist.");
+            System.out.println("No available slots for this physiotherapist.");
             return;
         }
 
         // Let user choose from the list
-        System.out.print("➡️ Choose a slot number: ");
+        System.out.print("Choose a slot number: ");
         int slotChoice = scanner.nextInt();
         scanner.nextLine();
 
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            System.out.println("❌ Invalid slot number.");
+            System.out.println("Invalid slot number.");
             return;
         }
 
@@ -192,12 +208,12 @@ public class Main {
         String time = selectedSlot[1];
 
         // Select patient
-        System.out.println("🧑‍🦱 Available Patients:");
+        System.out.println("Available Patients:");
         for (Patient patient : clinicManager.getPatients()) {
             System.out.println(patient.getId() + " - " + patient.getName());
         }
 
-        System.out.print("👤 Select Patient ID: ");
+        System.out.print("Select Patient ID: ");
         int patientId = scanner.nextInt();
         scanner.nextLine();
 
@@ -207,7 +223,7 @@ public class Main {
                 .orElse(null);
 
         if (selectedPatient == null) {
-            System.out.println("❌ Invalid Patient ID!");
+            System.out.println("Invalid Patient ID!");
             return;
         }
 
@@ -221,22 +237,22 @@ public class Main {
             Appointment newAppt = clinicManager.getAppointments().get(clinicManager.getAppointments().size() - 1);
 
             System.out.println("\n✅ Appointment Booked Successfully!");
-            System.out.println("📄 Booking ID: " + newAppt.getBookingId());
-            System.out.println("👤 Patient: " + newAppt.getPatient().getName());
-            System.out.println("🧑‍⚕️ Physio: " + newAppt.getPhysiotherapist().getName());
-            System.out.println("💆 Treatment: " + newAppt.getTreatment().getName());
-            System.out.println("📅 Date: " + newAppt.getTreatment().getDate());
-            System.out.println("⏰ Time: " + newAppt.getTreatment().getTime());
-            System.out.println("📌 Status: " + newAppt.getStatus());
+            System.out.println("Booking ID: " + newAppt.getBookingId());
+            System.out.println("Patient: " + newAppt.getPatient().getName());
+            System.out.println("Physio: " + newAppt.getPhysiotherapist().getName());
+            System.out.println("Treatment: " + newAppt.getTreatment().getName());
+            System.out.println("Date: " + newAppt.getTreatment().getDate());
+            System.out.println("Time: " + newAppt.getTreatment().getTime());
+            System.out.println("Status: " + newAppt.getStatus());
         } else {
-            System.out.println("❌ Appointment booking failed.");
+            System.out.println("Appointment booking failed.");
         }
     }
 
 
 
     private static void cancelAppointment() {
-        System.out.print("👤 Enter your Patient ID to view your bookings: ");
+        System.out.print("Enter your Patient ID to view your bookings: ");
         int patientId = scanner.nextInt();
         scanner.nextLine();
 
@@ -246,7 +262,7 @@ public class Main {
                 .orElse(null);
 
         if (patient == null) {
-            System.out.println("❌ Invalid Patient ID.");
+            System.out.println("Invalid Patient ID.");
             return;
         }
 
@@ -255,11 +271,11 @@ public class Main {
                 .toList();
 
         if (bookings.isEmpty()) {
-            System.out.println("😕 You have no booked appointments to cancel.");
+            System.out.println("You have no booked appointments to cancel.");
             return;
         }
 
-        System.out.println("\n📋 Your Booked Appointments:");
+        System.out.println("\n Your Booked Appointments:");
         for (Appointment appt : bookings) {
             System.out.println("🆔 ID: " + appt.getBookingId()
                     + " | " + appt.getTreatment().getDate()
@@ -267,7 +283,7 @@ public class Main {
                     + " | " + appt.getPhysiotherapist().getName());
         }
 
-        System.out.print("🆔 Enter the Booking ID to cancel: ");
+        System.out.print("Enter the Booking ID to cancel: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
 
@@ -276,7 +292,7 @@ public class Main {
 
 
     private static void attendAppointment() {
-        System.out.print("👤 Enter your Patient ID to view your appointments: ");
+        System.out.print("Enter your Patient ID to view your appointments: ");
         int patientId = scanner.nextInt();
         scanner.nextLine();
 
@@ -286,7 +302,7 @@ public class Main {
                 .orElse(null);
 
         if (patient == null) {
-            System.out.println("❌ Invalid Patient ID.");
+            System.out.println("Invalid Patient ID.");
             return;
         }
 
@@ -295,11 +311,11 @@ public class Main {
                 .toList();
 
         if (bookings.isEmpty()) {
-            System.out.println("😕 You have no upcoming appointments to attend.");
+            System.out.println("You have no upcoming appointments to attend.");
             return;
         }
 
-        System.out.println("\n📋 Your Booked Appointments:");
+        System.out.println("\n Your Booked Appointments:");
         for (Appointment appt : bookings) {
             System.out.println(appt.getBookingId()
                     + ". " + appt.getTreatment().getDate()
@@ -307,7 +323,7 @@ public class Main {
                     + " | " + appt.getPhysiotherapist().getName());
         }
 
-        System.out.print("🆔 Enter the Booking ID to mark as attended: ");
+        System.out.print("Enter the Booking ID to mark as attended: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
 
@@ -315,16 +331,16 @@ public class Main {
     }
 
     private static void changeAppointment() {
-        System.out.print("🔁 Enter Booking ID to change: ");
+        System.out.print("Enter Booking ID to change: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("🧑‍⚕️ Available Physiotherapists:");
+        System.out.println("Available Physiotherapists:");
         for (Physiotherapist physio : clinicManager.getPhysiotherapists()) {
             System.out.println(physio.getId() + " - " + physio.getName());
         }
 
-        System.out.print("➡️ Enter new Physiotherapist ID: ");
+        System.out.print("Enter new Physiotherapist ID: ");
         int physioId = scanner.nextInt();
         scanner.nextLine();
 
@@ -334,7 +350,7 @@ public class Main {
                 .orElse(null);
 
         if (newPhysio == null) {
-            System.out.println("❌ Invalid Physiotherapist ID!");
+            System.out.println("Invalid Physiotherapist ID!");
             return;
         }
 
@@ -342,7 +358,7 @@ public class Main {
         List<String[]> availableSlots = new ArrayList<>();
         int index = 1;
 
-        System.out.println("\n📅 Available Slots:");
+        System.out.println("\n Available Slots:");
         for (Map.Entry<String, List<String>> entry : newPhysio.getSchedule().entrySet()) {
             String date = entry.getKey();
             for (String time : entry.getValue()) {
@@ -353,16 +369,16 @@ public class Main {
         }
 
         if (availableSlots.isEmpty()) {
-            System.out.println("❌ No available slots.");
+            System.out.println("No available slots.");
             return;
         }
 
-        System.out.print("🕒 Choose a slot number: ");
+        System.out.print("Choose a slot number: ");
         int slotChoice = scanner.nextInt();
         scanner.nextLine();
 
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            System.out.println("❌ Invalid slot.");
+            System.out.println("Invalid slot.");
             return;
         }
 
@@ -374,7 +390,7 @@ public class Main {
         boolean updated = clinicManager.changeAppointment(bookingId, newTreatment, newPhysio);
 
         if (updated) {
-            System.out.println("✅ Appointment changed successfully!");
+            System.out.println("Appointment changed successfully!");
         }
     }
 
