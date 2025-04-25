@@ -104,12 +104,32 @@ public class Main {
         Physiotherapist selectedPhysio = null;
 
         if (method == 1) {
-            System.out.print("🔍 Enter area of expertise (e.g. Massage): ");
-            String expertise = scanner.nextLine();
-
-            System.out.println("📋 Physiotherapists with expertise in '" + expertise + "':");
+            // Collect unique expertise
+            Set<String> allExpertise = new LinkedHashSet<>();
             for (Physiotherapist physio : physios) {
-                if (physio.getExpertise().contains(expertise)) {
+                allExpertise.addAll(physio.getExpertise());
+            }
+
+            List<String> expertiseList = new ArrayList<>(allExpertise);
+            System.out.println("📋 Available Expertise Areas:");
+            for (int i = 0; i < expertiseList.size(); i++) {
+                System.out.println((i + 1) + ". " + expertiseList.get(i));
+            }
+
+            System.out.print("➡️ Choose an expertise by number: ");
+            int expertiseChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (expertiseChoice < 1 || expertiseChoice > expertiseList.size()) {
+                System.out.println("❌ Invalid expertise selection.");
+                return;
+            }
+
+            String selectedExpertise = expertiseList.get(expertiseChoice - 1);
+
+            System.out.println("📋 Physiotherapists with expertise in '" + selectedExpertise + "':");
+            for (Physiotherapist physio : physios) {
+                if (physio.getExpertise().contains(selectedExpertise)) {
                     System.out.println(physio.getId() + " - " + physio.getName());
                 }
             }
@@ -212,6 +232,7 @@ public class Main {
             System.out.println("❌ Appointment booking failed.");
         }
     }
+
 
 
     private static void cancelAppointment() {
