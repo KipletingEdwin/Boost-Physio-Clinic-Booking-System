@@ -73,12 +73,23 @@ public class ClinicManager {
         for (Appointment appointment : appointments) {
             if (appointment.getBookingId() == bookingId) {
                 appointment.cancel();
-                System.out.println("Appointment cancelled: ID " + bookingId);
+
+                // Release the slot back to the physiotherapist's schedule
+                Physiotherapist physio = appointment.getPhysiotherapist();
+                String date = appointment.getTreatment().getDate();
+                String time = appointment.getTreatment().getTime();
+
+                physio.getSchedule()
+                        .computeIfAbsent(date, k -> new ArrayList<>())
+                        .add(time);
+
+                System.out.println("Appointment cancelled and slot released: ID " + bookingId);
                 return;
             }
         }
         System.out.println("Appointment not found: ID " + bookingId);
     }
+
 
     public void attendAppointment(int bookingId) {
         for (Appointment appointment : appointments) {
