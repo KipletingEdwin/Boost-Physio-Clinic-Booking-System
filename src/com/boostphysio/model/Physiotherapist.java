@@ -8,7 +8,7 @@ public class Physiotherapist {
     private String address;
     private String contact;
     private List<String> expertise;
-    private Map<String, List<String>> schedule; // 4-week timetable
+    private Map<String, List<String>> schedule;
 
     public Physiotherapist(int id, String name, String address, String contact, List<String> expertise) {
         this.id = id;

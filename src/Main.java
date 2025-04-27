@@ -86,7 +86,7 @@ public class Main {
     private static void removePatient() {
         List<Patient> patients = clinicManager.getPatients();
         if (patients.isEmpty()) {
-            System.out.println("❌ No patients available to remove.");
+            System.out.println("No patients available to remove.");
             return;
         }
         System.out.println("\n Current Patients:");
@@ -236,7 +236,7 @@ public class Main {
 
             Appointment newAppt = clinicManager.getAppointments().get(clinicManager.getAppointments().size() - 1);
 
-            System.out.println("\n✅ Appointment Booked Successfully!");
+            System.out.println("\n Appointment Booked Successfully!");
             System.out.println("Booking ID: " + newAppt.getBookingId());
             System.out.println("Patient: " + newAppt.getPatient().getName());
             System.out.println("Physio: " + newAppt.getPhysiotherapist().getName());
@@ -277,7 +277,7 @@ public class Main {
 
         System.out.println("\n Your Booked Appointments:");
         for (Appointment appt : bookings) {
-            System.out.println("🆔 ID: " + appt.getBookingId()
+            System.out.println("ID: " + appt.getBookingId()
                     + " | " + appt.getTreatment().getDate()
                     + " @ " + appt.getTreatment().getTime()
                     + " | " + appt.getPhysiotherapist().getName());
@@ -286,7 +286,6 @@ public class Main {
         System.out.print("Enter the Booking ID to cancel: ");
         int bookingId = scanner.nextInt();
         scanner.nextLine();
-
         clinicManager.cancelAppointment(bookingId);
     }
 
@@ -393,6 +392,4 @@ public class Main {
             System.out.println("Appointment changed successfully!");
         }
     }
-
-
 }

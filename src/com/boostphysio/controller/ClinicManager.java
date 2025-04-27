@@ -153,7 +153,7 @@ public class ClinicManager {
         });
 
         for (Physiotherapist physio : physiotherapists) {
-            System.out.println("👨‍⚕️ " + physio.getName());
+            System.out.println(" " + physio.getName());
 
             for (Appointment appt : appointments) {
                 if (appt.getPhysiotherapist().getId() == physio.getId()) {
